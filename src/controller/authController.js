@@ -8,11 +8,11 @@ router.get('/login', isGuest, (req, res) => {
 });
 
 router.post('/login', isGuest, async (req, res) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     try {
         let token = await authServices.login({
-            email,
+            username,
             password
         });
 
@@ -46,7 +46,7 @@ router.post('/register', isGuest, async (req, res) => {
             password
         });
 
-        res.redirect('/')
+        res.redirect('/');
     } catch (error) {
         res.render('auth/register', { error: getErrorMessage(error) });
     }
