@@ -1,0 +1,24 @@
+{
+  "name": "petstagram",
+  "version": "1.0.0",
+  "description": "Create Exam for JS Back-End 2023",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BDimitrova/Petstagram.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BDimitrova/Petstagram/issues"
+  },
+  "homepage": "https://github.com/BDimitrova/Petstagram#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
