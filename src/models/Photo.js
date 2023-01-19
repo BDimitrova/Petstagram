@@ -46,9 +46,9 @@ photoSchema.method('getUsername', function () {
     return this.commentList.map(x => x.username);
 });
 
-photoSchema.method('getUsernameOfOwner', function () {
-    return this.owner.username;
-})
+// photoSchema.method('getUsernameOfOwner', function () {
+//     return this.owner.username;
+// })
 
 let Photo = mongoose.model('Photo', photoSchema);
 

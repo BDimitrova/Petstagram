@@ -13,7 +13,7 @@ exports.getMyCommentPhoto = (userId) => Photo.find({ commentList: userId }).lean
 
 exports.getMyCreatedPhoto = (userId) => Photo.find({ owner: userId }).lean();
 
-exports.getOne = (photoId) => Photo.findById(photoId).populate('followList');
+exports.getOne = (photoId) => Photo.findById(photoId).populate('commentList');
 
 exports.delete = (photoId) => Photo.findByIdAndDelete(photoId);
 
