@@ -15,6 +15,11 @@ async function checkIsOwner(req, res, next) {
 
 router.get('/catalog', async (req, res) => {
     let photo = await photoServices.getAll();
+    photo.map(p => async function () {
+        let photoOwner = await photoServices.findOwner(p.owner).lean();
+        p.ownerUsername == photoOwner;
+    });
+    console.log(photo);
     res.render('photo/catalog', { photo });
 });
 
@@ -24,7 +29,7 @@ router.get('/create-photo-post', isAuth, async (req, res) => {
 
 router.post('/create-photo-post', isAuth, async (req, res) => {
     try {
-        await photoServices.create({ ...req.body, owner: req.user});
+        await photoServices.create({ ...req.body, owner: req.user });
         res.redirect('/photo/catalog');
     } catch (error) {
         console.log(error);
@@ -68,7 +73,7 @@ router.post('/:photoId/edit', checkIsOwner, async (req, res) => {
         await photoServices.update(photoId, photoData);
         res.redirect(`/photo/${photoId}/details`);
     } catch (error) {
-        res.render('photo/edit', { error: getErrorMessage(error)})
+        res.render('photo/edit', { error: getErrorMessage(error) })
     }
 
 });
