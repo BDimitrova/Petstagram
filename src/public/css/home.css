@@ -93,7 +93,7 @@ h1.bold-welcome {
   animation-fill-mode: forwards;
 }
 
-/* @keyframes cssAnimation {
+@keyframes cssAnimation {
   to {
     width: 0;
     height: 0;
@@ -108,4 +108,4 @@ h1.bold-welcome {
     visibility: hidden;
     padding: 0;
   }
-} */
+}
