@@ -34,6 +34,9 @@ let photoSchema = new mongoose.Schema({
             content: {
                 type: String,
                 require: true
+            },
+            username: {
+                type: String,
             }
         }
     ],

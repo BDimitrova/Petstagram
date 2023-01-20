@@ -24,7 +24,7 @@ router.get('/create-photo-post', isAuth, async (req, res) => {
 
 router.post('/create-photo-post', isAuth, async (req, res) => {
     try {
-        await photoServices.create({ ...req.body, owner: req.user, ownerUsername: req.user.username});
+        await photoServices.create({ ...req.body, owner: req.user, ownerUsername: req.user.username });
         res.redirect('/photo/catalog');
     } catch (error) {
         console.log(error);
@@ -51,7 +51,7 @@ router.get('/:photoId/details', async (req, res) => {
 
     let photoOwner = await photoServices.findOwner(photo.owner).lean();
 
-    let photoComment = photo.commentList
+    let photoComment = photoData.commentList;
     // let getCommentUser = await photoService.findUser(photo)
     console.log(photoComment);
 
@@ -83,17 +83,11 @@ router.get('/:photoId/delete', checkIsOwner, async (req, res) => {
 });
 
 router.post('/:photoId/comment', async (req, res) => {
-    try {
-        const photoId = req.params.photoId;
-        let photo = await photoServices.getOne(photoId);
-
-        photo.commentList.push({ content: req.body.commentArea });
-        await photo.save();
-        res.redirect(`/photo/${req.params.photoId}/details`);
-    } catch (error) {
-        console.log(error);
-        res.render(`photo/details`, { error: getErrorMessage(error) })
-    }
+    const photoId = req.params.photoId;
+    let photo = await photoServices.getOne(photoId);
+    photo.commentList.push({ content: req.body.commentArea, username: req.user.username });
+    await photo.save();
+    res.redirect(`/photo/${req.params.photoId}/details`);
 });
 
 module.exports = router

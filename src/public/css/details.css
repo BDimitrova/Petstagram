@@ -19,6 +19,8 @@
 
 .comments .userDetails {
   display: block !important;
+  margin-top: 10px;
+  margin-left: 10px;;
 }
 
 .comments span {

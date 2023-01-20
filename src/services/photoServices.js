@@ -7,7 +7,7 @@ exports.getAll = () => Photo.find().lean();
 
 exports.findUser = (userId) => User.findById(userId);
 
-exports.findOwner = (userId) => User.findById(userId);
+exports.findOwner = (userId) => User.findById(userId).lean();
 
 exports.getMyCommentPhoto = (photoId) => Photo.find(photoId).lean();
 
