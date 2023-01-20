@@ -15,11 +15,6 @@ async function checkIsOwner(req, res, next) {
 
 router.get('/catalog', async (req, res) => {
     let photo = await photoServices.getAll();
-    photo.map(p => async function () {
-        let photoOwner = await photoServices.findOwner(p.owner).lean();
-        p.ownerUsername == photoOwner;
-    });
-    console.log(photo);
     res.render('photo/catalog', { photo });
 });
 
@@ -29,13 +24,13 @@ router.get('/create-photo-post', isAuth, async (req, res) => {
 
 router.post('/create-photo-post', isAuth, async (req, res) => {
     try {
-        await photoServices.create({ ...req.body, owner: req.user });
+        console.log(req.user);
+        await photoServices.create({ ...req.body, owner: req.user, ownerUsername: req.user.username});
         res.redirect('/photo/catalog');
     } catch (error) {
         console.log(error);
         res.render('photo/create', { error: getErrorMessage(error) })
     }
-
 });
 
 function getErrorMessage(error) {
@@ -57,7 +52,11 @@ router.get('/:photoId/details', async (req, res) => {
 
     let photoOwner = await photoServices.findOwner(photo.owner).lean();
 
-    res.render('photo/details', { ...photoData, isOwner, photoOwner });
+    let photoComment = photo.commentList
+    // let getCommentUser = await photoService.findUser(photo)
+    console.log(photoComment);
+
+    res.render('photo/details', { ...photoData, isOwner, photoOwner, photoComment });
 });
 
 router.get('/:photoId/edit', checkIsOwner, async (req, res) => {
@@ -82,6 +81,20 @@ router.get('/:photoId/delete', checkIsOwner, async (req, res) => {
     const photoId = req.params.photoId;
     await photoServices.delete(photoId);
     res.redirect('/photo/catalog');
+});
+
+router.post('/:photoId/comment', async (req, res) => {
+    try {
+        const photoId = req.params.photoId;
+        let photo = await photoServices.getOne(photoId);
+
+        photo.commentList.push({ content: req.body.commentArea });
+        await photo.save();
+        res.redirect(`/photo/${req.params.photoId}/details`);
+    } catch (error) {
+        console.log(error);
+        res.render(`photo/details`, { error: getErrorMessage(error) })
+    }
 });
 
 module.exports = router

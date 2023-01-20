@@ -24,8 +24,10 @@ let photoSchema = new mongoose.Schema({
     },
     commentList: [
         {
-            type: mongoose.Types.ObjectId,
-            ref: 'User',
+            content: {
+                type: String,
+                require: true
+            }
         }
     ],
     owner: {
@@ -33,8 +35,7 @@ let photoSchema = new mongoose.Schema({
         ref: 'User'
     },
     ownerUsername: {
-        type:  mongoose.Schema.Types.String,
-        ref: 'User'
+        type: String,
     }
 });
 
