@@ -19,7 +19,7 @@ router.post('/login', isGuest, async (req, res) => {
         res.cookie(AUTH_COOKIE_NAME, token);
         res.redirect('/');
     } catch (error) {
-        res.render('auth/login', { error: error.message });
+        res.render('auth/login', { error: error.message});
     }
 
 });
@@ -54,7 +54,6 @@ router.post('/register', isGuest, async (req, res) => {
 });
 
 function getErrorMessage(error) {
-    console.log(error);
     let errorsArr = Object.keys(error.errors);
 
     if (errorsArr.length > 0) {

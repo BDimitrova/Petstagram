@@ -4,10 +4,13 @@ let photoSchema = new mongoose.Schema({
     name: {
         type: String,
         require: true,
+        minLength: 2,
     },
     age: {
         type: Number,
         require: true,
+        min: 1,
+        max: 100
     },
     imageUrl: {
         type: String,
@@ -17,10 +20,14 @@ let photoSchema = new mongoose.Schema({
     description: {
         type: String,
         require: true,
+        minLength: 5,
+        maxLength:50
     },
     location: {
         type: String,
         require: true,
+        minLength: 5,
+        maxLength: 30
     },
     commentList: [
         {
@@ -46,10 +53,6 @@ photoSchema.method('getComment', function () {
 photoSchema.method('getUsername', function () {
     return this.commentList.map(x => x.username);
 });
-
-// photoSchema.method('getUsernameOfOwner', function () {
-//     return this.owner.username;
-// })
 
 let Photo = mongoose.model('Photo', photoSchema);
 

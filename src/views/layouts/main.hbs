@@ -12,6 +12,14 @@
 
 <body>
 
+    {{#if error}}
+    <div>
+        <div class="errorContainer">
+            <p>{{error}}</p>
+        </div>
+    </div>
+    {{/if}}
+
     <!-- Starts Header Section with Navigation Bar -->
     <header>
         <nav class="navbar">
@@ -59,7 +67,7 @@
                                 <i>Logout</i>
                             </a>
                         </li>
-                        
+
                         {{else}}
                         <!--For Guest User-->
                         <li class="nav-item">

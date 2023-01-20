@@ -24,12 +24,11 @@ router.get('/create-photo-post', isAuth, async (req, res) => {
 
 router.post('/create-photo-post', isAuth, async (req, res) => {
     try {
-        console.log(req.user);
         await photoServices.create({ ...req.body, owner: req.user, ownerUsername: req.user.username});
         res.redirect('/photo/catalog');
     } catch (error) {
         console.log(error);
-        res.render('photo/create', { error: getErrorMessage(error) })
+        res.render('photo/create', { error: error.message })
     }
 });
 
